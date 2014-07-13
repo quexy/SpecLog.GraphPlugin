@@ -1,0 +1,7 @@
+wiki/
+External/
+packages/
+*.user
+*.suo
+bin/
+obj/

@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="SpecLog.GraphPlugin.Client.ChangeUserDialogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d">
+    <DockPanel Margin="10" Width="300">
+        <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Content="OK" Command="{Binding ConfirmCommand}" Margin="0,0,2,0" />
+            <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="2,0,0,0" />
+        </StackPanel>
+        <Grid Margin="0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
+                <RowDefinition Height="25" />
+                <RowDefinition Height="25" />
+            </Grid.RowDefinitions>
+
+            <!-- user name -->
+            <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="User name" />
+            <TextBox Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Text="{Binding UserName}"/>
+
+            <!-- password -->
+            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Password" />
+            <PasswordBox Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" PasswordChanged="PasswordChanged" Name="PasswordBox" />
+
+            <!-- confirm password -->
+            <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Confirm password" />
+            <PasswordBox Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" PasswordChanged="PasswordChanged" Name="ConfirmPwdBox" />
+        </Grid>
+    </DockPanel>
+</UserControl>

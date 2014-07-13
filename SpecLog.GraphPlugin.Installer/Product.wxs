@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Product Id="*" Name="SpecLog Graph Plugin" Language="1033" Version="1.0.0.0" Manufacturer="quexy" UpgradeCode="95bc3dc1-96c5-4f61-9e6a-d8d9c4c9d12b">
+        <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+        <Media Id="1" Cabinet="GraphPlugin.cab" EmbedCab="yes" />
+
+        <Upgrade Id="95bc3dc1-96c5-4f61-9e6a-d8d9c4c9d12b" />
+        <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+
+        <PropertyRef Id="NETFRAMEWORK40CLIENT" />
+        <Condition Message='This application requires the Microsoft .NET Framework 4.0 Client Profile to be installed.'>
+            <![CDATA[Installed OR NETFRAMEWORK40CLIENT]]>
+        </Condition>
+
+        <!-- http://stackoverflow.com/questions/17292834/how-can-an-msi-installer-extension-locate-the-installation-directory-of-another -->
+        <Property Id="CLIENTINSTDIR" Admin="yes" Secure="yes">
+            <ComponentSearch Id="ClientComponentSearch" Type="file" Guid="d5ed99a0-36da-4474-82d9-4d6a3c8795f2">
+                <DirectorySearch Id="ClientComponentDirectorySearch" AssignToProperty="yes" Depth="0" />
+            </ComponentSearch>
+        </Property>
+        <Property Id="SERVERINSTDIR" Admin="yes" Secure="yes">
+            <ComponentSearch Id="ServerComponentSearch" Type="file" Guid="ad33bc99-5b3c-41b8-b969-09762c63ab6a">
+                <DirectorySearch Id="ServerComponentDirectorySearch" AssignToProperty="yes" Depth="0" />
+            </ComponentSearch>
+        </Property>
+
+        <Condition Message="SpecLog installation folder is not found"><![CDATA[ CLIENTINSTDIR <> "" OR SERVERINSTDIR <> "" ]]></Condition>
+
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFilesFolder">
+                <Directory Id="CompanyDir" Name="TechTalk">
+                    <Directory Id="INSTALLOCATION" Name="SpecLog">
+                        <Directory Id="ClientDir" Name="Client">
+                            <Directory Id="CLIENTINSTLOC" Name="Plugins" />
+                        </Directory>
+                        <Directory Id="ServerDir" Name="Server">
+                            <Directory Id="SERVERINSTLOC" Name="Plugins" />
+                        </Directory>
+                    </Directory>
+                </Directory>
+            </Directory>
+        </Directory>
+
+        <CustomAction Id="SetClientInstallFolder" Directory="CLIENTINSTLOC" Value="[CLIENTINSTDIR]Plugins\" />
+        <CustomAction Id="SetServerInstallFolder" Directory="SERVERINSTLOC" Value="[SERVERINSTDIR]Plugins\" />
+        <InstallExecuteSequence>
+            <Custom Action="SetClientInstallFolder" After="CostFinalize"><![CDATA[ NOT Installed AND CLIENTINSTDIR <> "" ]]></Custom>
+            <Custom Action="SetServerInstallFolder" After="CostFinalize"><![CDATA[ NOT Installed AND SERVERINSTDIR <> "" ]]></Custom>
+        </InstallExecuteSequence>
+
+        <Feature Title="SpecLog HTML Graph Plugin" Id="GraphPlugin_Feature" AllowAdvertise="no">
+            <Feature Title="Configuration Interface" Id="GraphPlugin_ClientFeature" Level="10">
+                <Condition Level="1"><![CDATA[ Installed OR CLIENTINSTDIR <> "" ]]></Condition>
+                <ComponentRef Id="GraphPlugin_Client" />
+            </Feature>
+            <Feature Title="Server Plugin" Id="GraphPlugin_ServerFeature" Level="10">
+                <Condition Level="1"><![CDATA[ Installed OR SERVERINSTDIR <> "" ]]></Condition>
+                <ComponentRef Id="GraphPlugin_Server" />
+            </Feature>
+        </Feature>
+    </Product>
+
+    <Fragment>
+        <DirectoryRef Id="CLIENTINSTLOC" FileSource="$(var.SpecLog.GraphPlugin.Client.TargetDir)">
+            <Component Id="GraphPlugin_Client" Guid="{8B91FFCB-3D1F-413F-99FF-13A23D1222E3}">
+                <File Name="SpecLog.GraphPlugin.Client.dll" />
+            </Component>
+        </DirectoryRef>
+
+        <DirectoryRef Id="SERVERINSTLOC" FileSource="$(var.SpecLog.GraphPlugin.Server.TargetDir)">
+            <Component Id="GraphPlugin_Server" Guid="{8B91FFCB-3D1F-413F-00DD-13A23D1222E3}">
+                <File Name="SpecLog.GraphPlugin.Server.dll" />
+            </Component>
+        </DirectoryRef>
+    </Fragment>
+</Wix>
