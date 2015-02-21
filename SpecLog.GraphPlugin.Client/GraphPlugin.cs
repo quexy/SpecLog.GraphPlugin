@@ -11,6 +11,8 @@ namespace SpecLog.GraphPlugin.Client
     public class GraphPlugin : IClientPlugin, IRepositoryAwareConfiguration
     {
         public const string PluginName = "SpecLog.GraphPlugin";
+        public const string LearnMoreText = "Learn more...";
+        public const string LearnMoreUrl = "http://github.com/quexy/SpecLog.GraphPlugin/";
 
         private readonly IDialogService dialogService;
         public GraphPlugin(IDialogService dialogService)
@@ -35,12 +37,17 @@ namespace SpecLog.GraphPlugin.Client
 
         public string LearnMoreLink
         {
-            get { return "http://github.com/quexy/SpecLog.GraphPlugin/"; }
+            get { return LearnMoreUrl; }
         }
 
         public string LearnMoreLinkText
         {
-            get { return "Learn more..."; }
+            get { return LearnMoreText; }
+        }
+
+        public string WorkItemProviderName
+        {
+            get { throw new NotSupportedException(); }
         }
 
         public bool IsConfigurable(RepositoryMode repositoryMode)

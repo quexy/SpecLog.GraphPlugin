@@ -13,7 +13,7 @@ namespace SpecLog.GraphPlugin.Client
         private readonly IRepositoryInfo repository;
         private readonly IDialogService dialogService;
         public GraphPluginConfigDialogViewModel(IDialogService dialogService, IRepositoryInfo repository, string config, bool enabled)
-            : base(config, enabled)
+            : base(config, enabled, GraphPlugin.LearnMoreText, GraphPlugin.LearnMoreUrl)
         {
             this.repository = repository;
             this.dialogService = dialogService;

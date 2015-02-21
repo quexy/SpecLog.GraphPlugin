@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <Product Id="*" Name="SpecLog Graph Plugin" Language="1033" Version="1.0.0.0" Manufacturer="quexy" UpgradeCode="95bc3dc1-96c5-4f61-9e6a-d8d9c4c9d12b">
+    <Product Id="17912A01-BBAE-40B5-A3F7-9BD61637E7CB"
+             Name="SpecLog Graph Plugin" Language="1033" Version="1.0.3.0" Manufacturer="quexy"
+             UpgradeCode="95bc3dc1-96c5-4f61-9e6a-d8d9c4c9d12b">
         <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
         <Media Id="1" Cabinet="GraphPlugin.cab" EmbedCab="yes" />
 
