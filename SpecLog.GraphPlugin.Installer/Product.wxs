@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Product Id="17912A01-BBAE-40B5-A3F7-9BD61637E7CB"
-             Name="SpecLog Graph Plugin" Language="1033" Version="1.0.3.0" Manufacturer="quexy"
+             Name="SpecLog Graph Plugin" Language="1033" Version="1.0.20.12" Manufacturer="quexy"
              UpgradeCode="95bc3dc1-96c5-4f61-9e6a-d8d9c4c9d12b">
         <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
         <Media Id="1" Cabinet="GraphPlugin.cab" EmbedCab="yes" />
@@ -9,9 +9,9 @@
         <Upgrade Id="95bc3dc1-96c5-4f61-9e6a-d8d9c4c9d12b" />
         <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 
-        <PropertyRef Id="NETFRAMEWORK40CLIENT" />
-        <Condition Message='This application requires the Microsoft .NET Framework 4.0 Client Profile to be installed.'>
-            <![CDATA[Installed OR NETFRAMEWORK40CLIENT]]>
+        <PropertyRef Id="WIX_IS_NETFRAMEWORK_46_OR_LATER_INSTALLED" />
+        <Condition Message='This application requires the Microsoft .NET Framework v4.6 or later to be installed.'>
+            <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_46_OR_LATER_INSTALLED]]>
         </Condition>
 
         <!-- http://stackoverflow.com/questions/17292834/how-can-an-msi-installer-extension-locate-the-installation-directory-of-another -->

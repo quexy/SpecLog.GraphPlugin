@@ -46,7 +46,7 @@ namespace SpecLog.GraphPlugin.Server
             this.repositoryAccess = repositoryAccess;
         }
 
-        public bool Apply(TechTalk.SpecLog.Entities.RepositoryInfo repository, TechTalk.SpecLog.Commands.Command command)
+        public CommandExecutionResult Apply(TechTalk.SpecLog.Entities.RepositoryInfo repository, TechTalk.SpecLog.Commands.Command command)
         {
             repositoryAccess.StoreCommand(command);
 
@@ -57,17 +57,19 @@ namespace SpecLog.GraphPlugin.Server
                 repositoryAccess.RenameRepository(nameChange.NewValue);
             }
 
-            return true;
+            return CommandExecutionResult.Success();
         }
 
         public void Resolve(TechTalk.SpecLog.Entities.RepositoryInfo repository, TechTalk.SpecLog.Commands.Command command)
         {
-            throw new NotSupportedException();
+            TechTalk.SpecLog.Logging.Logger.TechLog.Log(System.Diagnostics.TraceEventType.Warning,
+                "Should 'Resolve' command {0} from {1} (at {2)}", command.CommandName, command.CreatedBy, command.CreatedAt);
         }
 
         public void Undo(TechTalk.SpecLog.Entities.RepositoryInfo repositoryInfo, TechTalk.SpecLog.Commands.Command command)
         {
-            throw new NotSupportedException();
+            TechTalk.SpecLog.Logging.Logger.TechLog.Log(System.Diagnostics.TraceEventType.Warning,
+                "Should 'Undo' command {0} from {1} (at {2)}", command.CommandName, command.CreatedBy, command.CreatedAt);
         }
     }
 
@@ -80,7 +82,7 @@ namespace SpecLog.GraphPlugin.Server
 
         public void Delete(IBoundary boundary, TechTalk.SpecLog.Entities.ClientCommand clientCommand)
         {
-            /* NOP */
+            return;
         }
 
         public TechTalk.SpecLog.Entities.ClientCommand GetById(IBoundary boundary, Guid commandId)
